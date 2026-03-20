@@ -10,9 +10,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
@@ -38,4 +38,18 @@ public class User extends BaseTime {
 	private Provider provider;
 	
 	private String providerId;
+	
+	@Builder
+	public User(String email, String nickname, Role role, Provider provider, String providerId) {
+		this.email = email;
+		this.nickname = nickname;
+		this.role = role;
+		this.provider = provider;
+		this.providerId = providerId;
+	}
+	
+	public User update(String nickname) {
+		this.nickname = nickname;
+		return this;
+	}
 }
