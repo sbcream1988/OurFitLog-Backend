@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.ofl.domain.exercise.entity.Exercise;
 import com.ofl.domain.reply.entity.Reply;
-import com.ofl.domain.user.entity.User;
+import com.ofl.domain.user.entity.Member;
 import com.ofl.global.entity.BaseTime;
 
 import jakarta.persistence.CascadeType;
@@ -41,5 +41,5 @@ public class Post extends BaseTime {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private User user;
+	private Member user;
 }

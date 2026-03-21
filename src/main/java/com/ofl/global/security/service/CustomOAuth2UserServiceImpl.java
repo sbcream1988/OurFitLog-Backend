@@ -1,4 +1,4 @@
-package com.ofl.domain.user.service.serviceImpl;
+package com.ofl.global.security.service;
 
 import java.util.Map;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.ofl.domain.user.entity.Provider;
 import com.ofl.domain.user.entity.Role;
-import com.ofl.domain.user.entity.User;
+import com.ofl.domain.user.entity.Member;
 import com.ofl.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -35,15 +35,15 @@ public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService {
 		String nickname = (String) profile.get("nickname");
 		String providerId = attributes.get("id").toString();
 		
-		User user = saveOrUpdate(email, nickname, registrationId, providerId);
+		Member user = saveOrUpdate(email, nickname, registrationId, providerId);
 		
 		return oAuth2User;
 	}
 	
-	private User saveOrUpdate(String email, String nickname, String provider, String providerId) {
-		User user = userRepository.findByEmail(email)
+	private Member saveOrUpdate(String email, String nickname, String provider, String providerId) {
+		Member user = userRepository.findByEmail(email)
 				.map(entity -> entity.update(nickname))
-				.orElse(User.builder()
+				.orElse(Member.builder()
 						.email(email)
 						.nickname(nickname)
 						.provider(Provider.valueOf(provider.toUpperCase()))

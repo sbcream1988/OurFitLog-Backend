@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
-public class User extends BaseTime {
+@Table(name = "members")
+public class Member extends BaseTime {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +40,7 @@ public class User extends BaseTime {
 	private String providerId;
 	
 	@Builder
-	public User(String email, String nickname, Role role, Provider provider, String providerId) {
+	public Member(String email, String nickname, Role role, Provider provider, String providerId) {
 		this.email = email;
 		this.nickname = nickname;
 		this.role = role;
@@ -48,7 +48,7 @@ public class User extends BaseTime {
 		this.providerId = providerId;
 	}
 	
-	public User update(String nickname) {
+	public Member update(String nickname) {
 		this.nickname = nickname;
 		return this;
 	}
