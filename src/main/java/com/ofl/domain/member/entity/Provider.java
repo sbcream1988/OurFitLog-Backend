@@ -1,4 +1,4 @@
-package com.ofl.domain.user.entity;
+package com.ofl.domain.member.entity;
 
 public enum Provider {
 

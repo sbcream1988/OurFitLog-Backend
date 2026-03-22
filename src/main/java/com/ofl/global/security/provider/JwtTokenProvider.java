@@ -11,7 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
-import com.ofl.domain.user.entity.Member;
+import com.ofl.domain.member.entity.Member;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

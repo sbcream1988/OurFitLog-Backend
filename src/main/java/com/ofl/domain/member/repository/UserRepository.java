@@ -1,10 +1,10 @@
-package com.ofl.domain.user.repository;
+package com.ofl.domain.member.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ofl.domain.user.entity.Member;
+import com.ofl.domain.member.entity.Member;
 
 
 public interface UserRepository extends JpaRepository<Member, Long> {

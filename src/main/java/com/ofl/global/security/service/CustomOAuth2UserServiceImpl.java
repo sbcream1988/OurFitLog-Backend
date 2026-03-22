@@ -8,10 +8,10 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import com.ofl.domain.user.entity.Provider;
-import com.ofl.domain.user.entity.Role;
-import com.ofl.domain.user.entity.Member;
-import com.ofl.domain.user.repository.UserRepository;
+import com.ofl.domain.member.entity.Member;
+import com.ofl.domain.member.entity.Provider;
+import com.ofl.domain.member.entity.Role;
+import com.ofl.domain.member.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

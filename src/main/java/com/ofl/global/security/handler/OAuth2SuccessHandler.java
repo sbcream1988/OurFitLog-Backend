@@ -8,8 +8,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.ofl.domain.user.entity.Member;
-import com.ofl.domain.user.repository.UserRepository;
+import com.ofl.domain.member.entity.Member;
+import com.ofl.domain.member.repository.UserRepository;
 import com.ofl.global.security.provider.JwtTokenProvider;
 
 import jakarta.servlet.ServletException;
