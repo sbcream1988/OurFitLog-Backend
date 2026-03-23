@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.ofl.domain.member.entity.Member;
 import com.ofl.domain.member.entity.Provider;
 import com.ofl.domain.member.entity.Role;
-import com.ofl.domain.member.repository.UserRepository;
+import com.ofl.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService {
 
-	private final UserRepository userRepository;
+	private final MemberRepository memberRepository;
 	
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 		
@@ -37,11 +37,11 @@ public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService {
 		
 		Member user = saveOrUpdate(email, nickname, registrationId, providerId);
 		
-		return oAuth2User;
+		return new CustomUserDetails(user, attributes);
 	}
 	
 	private Member saveOrUpdate(String email, String nickname, String provider, String providerId) {
-		Member user = userRepository.findByEmail(email)
+		Member member = memberRepository.findByEmail(email)
 				.map(entity -> entity.update(nickname))
 				.orElse(Member.builder()
 						.email(email)
@@ -51,7 +51,7 @@ public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService {
 						.role(Role.USER)
 						.build());
 		
-		return userRepository.save(user);
+		return memberRepository.save(member);
 	}
 	
 }

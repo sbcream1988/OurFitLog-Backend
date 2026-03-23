@@ -1,5 +1,7 @@
 package com.ofl.domain.member.entity;
 
+import org.hibernate.annotations.SQLRestriction;
+
 import com.ofl.global.entity.BaseTime;
 
 import jakarta.persistence.Column;
@@ -18,6 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "members")
+@SQLRestriction("is_deleted = false")
 public class Member extends BaseTime {
 
 	@Id
@@ -51,5 +54,11 @@ public class Member extends BaseTime {
 	public Member update(String nickname) {
 		this.nickname = nickname;
 		return this;
+	}
+	
+	private boolean isDeleted = false;
+	
+	public void withDraw() {
+		this.isDeleted = true;
 	}
 }

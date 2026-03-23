@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import com.ofl.domain.member.entity.Member;
+import com.ofl.domain.member.entity.Role;
+import com.ofl.global.security.service.CustomUserDetails;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -98,12 +99,18 @@ public class JwtTokenProvider {
 				.parseClaimsJws(token)
 				.getBody();
 		
-		String userId = claims.getSubject();
+		Long userId = Long.parseLong(claims.getSubject());
+		String email = claims.get("email", String.class);
 		String roleName = claims.get("role", String.class);
 		
-		List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + roleName));
+		Member member = Member.builder()
+				.email(email)
+				.role(Role.valueOf(roleName))
+				.build();
 		
-		User principal = new User(userId, "", authorities);
+		CustomUserDetails principal = new CustomUserDetails(member,userId);
+		
+		List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + roleName));
 		
 		return new UsernamePasswordAuthenticationToken(principal, token, authorities);
 	}

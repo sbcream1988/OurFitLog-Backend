@@ -9,7 +9,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 import com.ofl.domain.member.entity.Member;
-import com.ofl.domain.member.repository.UserRepository;
+import com.ofl.domain.member.repository.MemberRepository;
 import com.ofl.global.security.provider.JwtTokenProvider;
 
 import jakarta.servlet.ServletException;
@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	
 	private final JwtTokenProvider jwtTokenProvider;
-	private final UserRepository userRepository;
+	private final MemberRepository userRepository;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,Authentication authentication
