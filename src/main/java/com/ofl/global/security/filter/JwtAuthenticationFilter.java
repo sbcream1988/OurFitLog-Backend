@@ -13,7 +13,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -34,8 +36,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			if(jwtTokenProvider.validateToken(token)) {
 				Authentication auth = jwtTokenProvider.getAuthentication(token);
 				SecurityContextHolder.getContext().setAuthentication(auth);
+				log.debug("[JWT Filter] 인증 성공: {}", auth.getName());
 			}
 		}catch(Exception e) {
+			log.error("[JWT Filter] 인증 실패: {}", e.getMessage());
 			SecurityContextHolder.clearContext();
 		}
 		filterchain.doFilter(request, response);

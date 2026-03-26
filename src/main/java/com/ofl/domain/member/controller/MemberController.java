@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ofl.domain.member.dto.request.MemberRequestDto;
 import com.ofl.domain.member.dto.response.MemberResponseDto;
 import com.ofl.domain.member.service.service.MemberService;
+import com.ofl.global.dto.ApiResponse;
 import com.ofl.global.error.CustomException;
 import com.ofl.global.error.ErrorCode;
 import com.ofl.global.security.service.CustomUserDetails;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/auth/members")
 @RequiredArgsConstructor
@@ -27,25 +30,32 @@ public class MemberController {
 	
 	// 내 정보 조회
 	@GetMapping("/me")
-	public ResponseEntity<MemberResponseDto> getMyInfo(@AuthenticationPrincipal CustomUserDetails userDetails){
+	public ResponseEntity<ApiResponse<MemberResponseDto>> getMyInfo(@AuthenticationPrincipal CustomUserDetails userDetails){
+		log.info("[MemberController] 내 정보 조회 요청 - Member ID:{}",userDetails.getId());
 		if(userDetails == null || userDetails.getId() ==null) {
+			log.warn("[MemberController] 인증 정보 없음 - 접근 거부");
 			throw new CustomException(ErrorCode.UNAUTHORIZED_USER);
 		}
 		MemberResponseDto response = memberService.getMyInfo(userDetails.getId());
-		return ResponseEntity.ok(response);
+		log.info("[MemberController] 내 정보 조회 성공 - Email : {}", response.email());
+		return ResponseEntity.ok(ApiResponse.success(response));
 	}
 	
 	// 내 정보 수정
 	@PatchMapping("/me")
 	public ResponseEntity<Void> updateMyInfo(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody MemberRequestDto request){
+		log.info("[MemberController] 정보 수정 요청 - Member ID: {} , New Nickname : {}", userDetails.getId(), request.nickname());
 		memberService.updateMember(userDetails.getId(), request);
+		log.info("[MemberController] 정보 수정 완료 - Member ID: {}", userDetails.getId());
 		return ResponseEntity.ok().build();
 	}
 	
 	// 회원 탈퇴
 	@DeleteMapping("/me")
 	public ResponseEntity<Void> withdrawMember(@AuthenticationPrincipal CustomUserDetails userDetails){
+		log.info("[MemberController] 회원 탈퇴 요청 - Member ID: {}", userDetails.getId());
 		memberService.withdrawMember(userDetails.getId());
+		log.info("[MemberController] 회원 탈퇴 성공 - Member ID: {}", userDetails.getId());
 		return ResponseEntity.noContent().build();
 	}
 	

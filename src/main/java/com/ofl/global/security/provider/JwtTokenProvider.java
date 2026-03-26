@@ -15,11 +15,16 @@ import com.ofl.domain.member.entity.Role;
 import com.ofl.global.security.service.CustomUserDetails;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class JwtTokenProvider {
 
@@ -63,9 +68,14 @@ public class JwtTokenProvider {
 		try {
 			Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
 			return true;
+		}catch (ExpiredJwtException e) {
+			log.warn("[JWT] 만료된 토큰입니다");
+		}catch (UnsupportedJwtException | MalformedJwtException e) {
+			log.warn("[JWT] 변조된 토큰입니다");
 		}catch (Exception e) {
-			return false;
+			log.error("[JWT] 토큰 검증 중 에러 발생 : {}" , e.getMessage());
 		}
+		return false;
 	}
 	
 	

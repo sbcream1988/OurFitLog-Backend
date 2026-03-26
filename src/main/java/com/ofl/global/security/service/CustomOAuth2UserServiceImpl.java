@@ -14,7 +14,9 @@ import com.ofl.domain.member.entity.Role;
 import com.ofl.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService {
@@ -27,6 +29,8 @@ public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService {
 		
 		String registrationId = userRequest.getClientRegistration().getRegistrationId();
 		
+		log.info("[OAuth2] 로그인 시도 - Provider: {}", registrationId);
+		
 		Map<String, Object> attributes = oAuth2User.getAttributes();
 		Map<String, Object> kakaoAccount = (Map<String,Object>) attributes.get("kakao_account");
 		Map<String, Object> profile = (Map<String,Object>) kakaoAccount.get("profile");
@@ -36,6 +40,7 @@ public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService {
 		String providerId = attributes.get("id").toString();
 		
 		Member user = saveOrUpdate(email, nickname, registrationId, providerId);
+		log.info("[OAuth2] 사용자 정보 저장/업데이트 완료 - Email: {}",email);
 		
 		return new CustomUserDetails(user, attributes);
 	}
