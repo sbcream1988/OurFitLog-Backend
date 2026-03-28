@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ofl.domain.map.service.MapService;
-import com.ofl.infa.kakao.client.KakaoLocalClient;
-import com.ofl.infa.kakao.dto.KakaoSearchResponse;
+import com.ofl.infra.kakao.client.KakaoLocalClient;
+import com.ofl.infra.kakao.dto.KakaoSearchResponse;
 
 import lombok.RequiredArgsConstructor;
 

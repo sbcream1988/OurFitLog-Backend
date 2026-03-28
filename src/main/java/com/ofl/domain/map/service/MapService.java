@@ -1,6 +1,6 @@
 package com.ofl.domain.map.service;
 
-import com.ofl.infa.kakao.dto.KakaoSearchResponse;
+import com.ofl.infra.kakao.dto.KakaoSearchResponse;
 
 public interface MapService {
 

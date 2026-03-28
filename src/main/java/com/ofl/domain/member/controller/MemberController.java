@@ -37,14 +37,14 @@ public class MemberController {
 			throw new CustomException(ErrorCode.UNAUTHORIZED_USER);
 		}
 		MemberResponseDto response = memberService.getMyInfo(userDetails.getId());
-		log.info("[MemberController] 내 정보 조회 성공 - Email : {}", response.email());
+		log.info("[MemberController] 내 정보 조회 성공 - Email : {}", response.getEmail());
 		return ResponseEntity.ok(ApiResponse.success(response));
 	}
 	
 	// 내 정보 수정
 	@PatchMapping("/me")
 	public ResponseEntity<Void> updateMyInfo(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody MemberRequestDto request){
-		log.info("[MemberController] 정보 수정 요청 - Member ID: {} , New Nickname : {}", userDetails.getId(), request.nickname());
+		log.info("[MemberController] 정보 수정 요청 - Member ID: {} , New Nickname : {}", userDetails.getId(), request.getNickname());
 		memberService.updateMember(userDetails.getId(), request);
 		log.info("[MemberController] 정보 수정 완료 - Member ID: {}", userDetails.getId());
 		return ResponseEntity.ok().build();

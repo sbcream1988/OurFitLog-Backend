@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ofl.domain.map.service.MapService;
-import com.ofl.infa.kakao.dto.KakaoSearchResponse;
+import com.ofl.infra.kakao.dto.KakaoSearchResponse;
 
 import lombok.RequiredArgsConstructor;
 

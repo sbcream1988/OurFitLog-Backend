@@ -1,4 +1,4 @@
-package com.ofl.infa.kakao.dto;
+package com.ofl.infra.kakao.dto;
 
 import java.util.List;
 

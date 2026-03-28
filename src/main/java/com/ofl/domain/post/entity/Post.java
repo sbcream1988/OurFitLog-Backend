@@ -3,6 +3,7 @@ package com.ofl.domain.post.entity;
 import java.util.List;
 
 import com.ofl.domain.exercise.entity.Exercise;
+import com.ofl.domain.location.entity.Location;
 import com.ofl.domain.member.entity.Member;
 import com.ofl.domain.reply.entity.Reply;
 import com.ofl.global.entity.BaseTime;
@@ -15,13 +16,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
 @Entity
+@AllArgsConstructor
+@Builder
 @Table(name = "post")
 public class Post extends BaseTime {
 
@@ -40,6 +46,18 @@ public class Post extends BaseTime {
 	private List<Reply> reply;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private Member user;
+	@JoinColumn(name = "member_id")
+	private Member member;
+	
+	@OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Location location;
+	
+	public void addLocation(Location location) {
+		this.location = location;
+		location.setPost(this);
+	}
+	
+	public void setMember(Member member) {
+		this.member = member;
+	}
 }

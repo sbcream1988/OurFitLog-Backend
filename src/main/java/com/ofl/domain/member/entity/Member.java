@@ -3,6 +3,7 @@ package com.ofl.domain.member.entity;
 import org.hibernate.annotations.SQLRestriction;
 
 import com.ofl.global.entity.BaseTime;
+import com.ofl.global.entity.ProviderType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,12 +39,12 @@ public class Member extends BaseTime {
 	private Role role;
 	
 	@Enumerated(EnumType.STRING)
-	private Provider provider;
+	private ProviderType provider;
 	
 	private String providerId;
 	
 	@Builder
-	public Member(String email, String nickname, Role role, Provider provider, String providerId) {
+	public Member(String email, String nickname, Role role, ProviderType provider, String providerId) {
 		this.email = email;
 		this.nickname = nickname;
 		this.role = role;

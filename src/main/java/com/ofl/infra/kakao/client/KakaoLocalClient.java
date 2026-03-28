@@ -1,4 +1,4 @@
-package com.ofl.infa.kakao.client;
+package com.ofl.infra.kakao.client;
 
 
 
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ofl.infa.kakao.dto.KakaoSearchResponse;
+import com.ofl.infra.kakao.dto.KakaoSearchResponse;
 
 @FeignClient(name = "kakaoLocalClient", url = "${kakao.api.base-url}")
 public interface KakaoLocalClient {

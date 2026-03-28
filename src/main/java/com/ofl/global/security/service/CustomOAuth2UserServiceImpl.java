@@ -9,9 +9,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import com.ofl.domain.member.entity.Member;
-import com.ofl.domain.member.entity.Provider;
 import com.ofl.domain.member.entity.Role;
 import com.ofl.domain.member.repository.MemberRepository;
+import com.ofl.global.entity.ProviderType;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +51,7 @@ public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService {
 				.orElse(Member.builder()
 						.email(email)
 						.nickname(nickname)
-						.provider(Provider.valueOf(provider.toUpperCase()))
+						.provider(ProviderType.valueOf(provider.toUpperCase()))
 						.providerId(providerId)
 						.role(Role.USER)
 						.build());

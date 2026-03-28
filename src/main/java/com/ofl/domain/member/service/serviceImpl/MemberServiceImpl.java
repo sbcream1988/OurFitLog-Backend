@@ -44,8 +44,8 @@ public class MemberServiceImpl implements MemberService{
 					return new CustomException(ErrorCode.USER_NOT_FOUND);});
 		
 		String oldNickname = member.getNickname();
-		member.update(request.nickname());
-		log.info("[MemberService] 닉네임 변경: {} -> {}", oldNickname, request.nickname());
+		member.update(request.getNickname());
+		log.info("[MemberService] 닉네임 변경: {} -> {}", oldNickname, request.getNickname());
 	}
 	
 	@Override
