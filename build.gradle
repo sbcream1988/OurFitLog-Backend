@@ -46,6 +46,12 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.0.Beta1'
 	
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3:3.0.0'
+	
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 }
 
 tasks.named('test') {
@@ -56,4 +62,18 @@ dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:2024.0.1"
     }
+}
+
+def querydslDir = "$buildDir/generated/querydsl"
+
+sourceSets {
+    main.java.srcDirs += [ querydslDir ]
+}
+
+tasks.withType(JavaCompile) {
+    options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
+}
+
+clean {
+    delete file(querydslDir)
 }

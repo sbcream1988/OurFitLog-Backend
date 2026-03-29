@@ -1,5 +1,8 @@
 package com.ofl.domain.post.mapper;
 
+
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -14,6 +17,7 @@ public interface PostMapper {
 	@Mapping(source = "member.nickname", target = "nickname")
 	PostResponseDto toDto(Post post);
 	
+	List<PostResponseDto> toDtoList(List<Post> posts);
 	
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "member", ignore = true)

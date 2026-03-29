@@ -1,8 +1,10 @@
 package com.ofl.domain.post.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ofl.domain.exercise.entity.Exercise;
+import com.ofl.domain.image.entity.Image;
 import com.ofl.domain.location.entity.Location;
 import com.ofl.domain.member.entity.Member;
 import com.ofl.domain.reply.entity.Reply;
@@ -52,6 +54,10 @@ public class Post extends BaseTime {
 	@OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Location location;
 	
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+	@Builder.Default
+	private List<Image> images = new ArrayList<>();
+	
 	public void addLocation(Location location) {
 		this.location = location;
 		location.setPost(this);
@@ -59,5 +65,10 @@ public class Post extends BaseTime {
 	
 	public void setMember(Member member) {
 		this.member = member;
+	}
+	
+	public void addImage(Image image) {
+		this.images.add(image);
+		image.setPost(this);
 	}
 }
