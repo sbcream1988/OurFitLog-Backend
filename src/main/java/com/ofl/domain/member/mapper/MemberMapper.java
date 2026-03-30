@@ -1,6 +1,7 @@
 package com.ofl.domain.member.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import com.ofl.domain.member.dto.request.MemberRequestDto;
 import com.ofl.domain.member.dto.response.MemberResponseDto;
@@ -11,5 +12,8 @@ public interface MemberMapper {
 
 	MemberResponseDto toDto(Member member);
 	
+	@Mapping(target = "role", ignore = true)
+	@Mapping(target = "provider", ignore = true)
+	@Mapping(target = "providerId", ignore = true)
 	Member toEntity(MemberRequestDto dto);
 }

@@ -23,5 +23,6 @@ public interface PostMapper {
 	@Mapping(target = "member", ignore = true)
 	@Mapping(target = "exercise", ignore = true)
 	@Mapping(target = "reply", ignore = true)
+	@Mapping(target = "images", ignore = true)
 	Post toEntity(PostCreateRequestDto dto);
 }

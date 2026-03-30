@@ -1,8 +1,9 @@
-package com.ofl.domain.reply.entity;
+package com.ofl.domain.like.entity;
+
+
 
 import com.ofl.domain.member.entity.Member;
 import com.ofl.domain.post.entity.Post;
-import com.ofl.global.entity.BaseTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,40 +18,23 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "reply")
-public class Reply extends BaseTime {
-
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Table(name = "post_like")
+public class PostLike {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	private String content;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "post_id")
-	private Post post;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
 	private Member member;
 	
-	@Builder
-	public Reply(String content, Post post, Member member) {
-		this.content = content;
-		this.post = post;
-		this.member = member;
-	}
-	
-	public void setRegistraction(Member member, Post post) {
-		this.member = member;
-		this.post = post;
-	}
-	
-	public boolean isAuthor(String email) {
-		return this.member.getEmail().equals(email);
-	}
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "post_id")
+	private Post post;
 }

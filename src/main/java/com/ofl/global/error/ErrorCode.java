@@ -21,6 +21,8 @@ public enum ErrorCode {
 	// 404 추후 업데이트되는 엔티티에 맞춰 수정
 	USER_NOT_FOUND(HttpStatus.NOT_FOUND, "USER-001", "존재하지 않는 사용자입니다"),
 	LOCATION_NOT_FOUND(HttpStatus.NOT_FOUND, "LOCATION-001", "해당 장소 정보가 없습니다"),
+	POST_NOT_FOUND(HttpStatus.NOT_FOUND, "POST-001", "존재하지 않는 게시물입니다"),
+	REPLY_NOT_FOUND(HttpStatus.NOT_FOUND, "REPLY-001", "존재하지 않는 댓글입니다"),
 	
 	// 500
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "SERVER-001","서버 내부 오류가 발생했습니다");
