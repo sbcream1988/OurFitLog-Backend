@@ -14,6 +14,7 @@ import com.ofl.domain.gathering.repository.GatheringRepository;
 import com.ofl.domain.gathering.service.service.GatheringService;
 import com.ofl.domain.member.entity.Member;
 import com.ofl.global.error.CustomException;
+import com.ofl.global.error.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 
@@ -47,8 +48,17 @@ public class GatheringServiceImpl implements GatheringService {
 	@Override
 	public GatheringResponseDto getGatheringById(Long id) {
 		Gathering gathering = gatheringRepository.findById(id)
-					.orElseThrow(()-> new CustomException(null));
+					.orElseThrow(()-> new CustomException(ErrorCode.GATHERING_NOT_FOUND));
 		return gatheringMapper.toDto(gathering);
+	}
+	
+	@Override
+	@Transactional
+	public void delete(Long id) {
+		Gathering gathering = gatheringRepository.findById(id)
+				.orElseThrow(()-> new CustomException(ErrorCode.GATHERING_NOT_FOUND));
+		
+		gatheringRepository.delete(gathering);
 	}
 
 }

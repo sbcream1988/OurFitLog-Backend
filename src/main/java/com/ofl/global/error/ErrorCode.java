@@ -25,8 +25,10 @@ public enum ErrorCode {
 	POST_NOT_FOUND(HttpStatus.NOT_FOUND, "POST-001", "존재하지 않는 게시물입니다"),
 	REPLY_NOT_FOUND(HttpStatus.NOT_FOUND, "REPLY-001", "존재하지 않는 댓글입니다"),
 	GATHERING_NOT_FOUND(HttpStatus.NOT_FOUND, "GATHERING-002", "존재하지 않는 모임입니다"),
+	PARTICIPATION_NOT_FOUD(HttpStatus.NOT_FOUND, "PARTICIPATION-002", "존재하지 않는 참가정보입니다"),
 	
 	ALREADY_PARTICIPATED(HttpStatus.CONFLICT,"PARTICIPATION-001", "이미 신청한 모임입니다"),
+	
 	
 	// 500
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "SERVER-001","서버 내부 오류가 발생했습니다");

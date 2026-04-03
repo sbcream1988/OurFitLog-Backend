@@ -14,5 +14,5 @@ public interface GatheringService {
 	
 	public GatheringResponseDto getGatheringById(Long id);
 
-	
+	public void delete(Long id);
 }

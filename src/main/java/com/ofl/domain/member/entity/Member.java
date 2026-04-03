@@ -39,6 +39,7 @@ public class Member extends BaseTime {
 	private Role role;
 	
 	@Enumerated(EnumType.STRING)
+	@Column(name = "provider", length = 20)
 	private ProviderType provider;
 	
 	private String providerId;
