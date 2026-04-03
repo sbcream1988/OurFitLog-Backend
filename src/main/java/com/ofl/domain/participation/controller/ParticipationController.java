@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ofl.domain.participation.service.service.ParticipationService;
-import com.ofl.global.dto.ApiResponse;
+import com.ofl.global.dto.response.ApiResponse;
 import com.ofl.global.security.service.CustomUserDetails;
 
 import lombok.RequiredArgsConstructor;

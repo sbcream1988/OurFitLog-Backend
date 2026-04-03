@@ -1,6 +1,7 @@
 package com.ofl.domain.reply.service.serviceImpl;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,8 +18,11 @@ import com.ofl.domain.reply.entity.Reply;
 import com.ofl.domain.reply.mapper.ReplyMapper;
 import com.ofl.domain.reply.repository.ReplyRepository;
 import com.ofl.domain.reply.service.service.ReplyService;
+import com.ofl.global.dto.response.NotificationResponseDto;
+import com.ofl.global.entity.WebSocketType;
 import com.ofl.global.error.CustomException;
 import com.ofl.global.error.ErrorCode;
+import com.ofl.global.service.NotificationService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +35,7 @@ public class ReplyServiceImpl implements ReplyService {
 	private final PostRepository postRepository;
 	private final MemberRepository memberRepository;
 	private final ReplyMapper replyMapper;
+	private final NotificationService notificationService;
 	
 	@Override
 	public Long createReply(Long postId, ReplyCreateRequestDto dto, String email) {
@@ -42,6 +47,15 @@ public class ReplyServiceImpl implements ReplyService {
 		
 		Reply reply = replyMapper.toEntity(dto);
 		reply.setRegistraction(member, post);
+		
+		NotificationResponseDto notice = NotificationResponseDto.builder()
+				.type(WebSocketType.REPLY.name())
+				.message("작성하신 글에 새 댓글이 달렸습니다")
+				.urlId(post.getId().toString())
+				.createdAt(LocalDateTime.now().toString())
+				.build();
+		
+		notificationService.sendNotification(email, notice);
 		
 		
 		return replyRepository.save(reply).getId();

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ofl.domain.reply.dto.request.ReplyCreateRequestDto;
 import com.ofl.domain.reply.dto.response.ReplyResponseDto;
 import com.ofl.domain.reply.service.service.ReplyService;
-import com.ofl.global.dto.ApiResponse;
+import com.ofl.global.dto.response.ApiResponse;
 import com.ofl.global.security.service.CustomUserDetails;
 
 import jakarta.validation.Valid;

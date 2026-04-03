@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ofl.domain.member.dto.request.MemberRequestDto;
 import com.ofl.domain.member.dto.response.MemberResponseDto;
 import com.ofl.domain.member.service.service.MemberService;
-import com.ofl.global.dto.ApiResponse;
+import com.ofl.global.dto.response.ApiResponse;
 import com.ofl.global.error.CustomException;
 import com.ofl.global.error.ErrorCode;
 import com.ofl.global.security.service.CustomUserDetails;

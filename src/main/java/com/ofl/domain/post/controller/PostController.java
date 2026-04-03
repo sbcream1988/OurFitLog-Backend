@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ofl.domain.post.dto.request.PostCreateRequestDto;
 import com.ofl.domain.post.dto.response.PostResponseDto;
 import com.ofl.domain.post.service.service.PostService;
-import com.ofl.global.dto.ApiResponse;
+import com.ofl.global.dto.response.ApiResponse;
 import com.ofl.global.security.service.CustomUserDetails;
 
 import lombok.RequiredArgsConstructor;

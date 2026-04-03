@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ofl.domain.gathering.dto.request.GatheringRequestDto;
 import com.ofl.domain.gathering.dto.response.GatheringResponseDto;
 import com.ofl.domain.gathering.service.service.GatheringService;
-import com.ofl.global.dto.ApiResponse;
+import com.ofl.global.dto.response.ApiResponse;
 import com.ofl.global.security.service.CustomUserDetails;
 
 import lombok.RequiredArgsConstructor;
