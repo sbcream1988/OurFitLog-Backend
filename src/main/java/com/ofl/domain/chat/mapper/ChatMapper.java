@@ -13,6 +13,7 @@ import com.ofl.domain.chat.entity.ChatRoom;
 @Mapper(componentModel = "spring")
 public interface ChatMapper {
 
+	@Mapping(source = "id", target="roomId")
 	ChatRoomResponseDto toRoomDto(ChatRoom chatRoom);
 	
 	@Mapping(source = "sender.nickname", target = "senderNickname")

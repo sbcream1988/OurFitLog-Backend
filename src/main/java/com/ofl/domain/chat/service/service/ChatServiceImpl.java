@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ofl.domain.chat.dto.request.ChatMessageRequestDto;
+import com.ofl.domain.chat.dto.request.ChatRoomRequestDto;
 import com.ofl.domain.chat.dto.response.ChatMessageResponseDto;
 import com.ofl.domain.chat.entity.ChatMessage;
 import com.ofl.domain.chat.entity.ChatRoom;
@@ -34,10 +35,10 @@ public class ChatServiceImpl implements ChatService{
 	private final SimpMessagingTemplate simpMessagingTemplate;
 	
 	@Override
-	public Long createChatRoom(String name, ChatType type) {
+	public Long createChatRoom(ChatRoomRequestDto dto) {
 		ChatRoom room = ChatRoom.builder()
-				.name(name)
-				.type(type)
+				.name(dto.getName())
+				.type(dto.getType())
 				.build();
 		
 		return chatRoomRespository.save(room).getId();
@@ -61,7 +62,7 @@ public class ChatServiceImpl implements ChatService{
 		ChatMessageResponseDto responseDto = chatMapper.toMessageDto(savedMessage);
 		
 		
-		simpMessagingTemplate.convertAndSend("/sub/chat/room" + responseDto.getRoomId(), responseDto);
+		simpMessagingTemplate.convertAndSend("/sub/chat/room/" + responseDto.getRoomId(), responseDto);
 				
 	}
 	
