@@ -13,6 +13,7 @@ import com.ofl.domain.gathering.mapper.GatheringMapper;
 import com.ofl.domain.gathering.repository.GatheringRepository;
 import com.ofl.domain.gathering.service.service.GatheringService;
 import com.ofl.domain.member.entity.Member;
+import com.ofl.domain.member.repository.MemberRepository;
 import com.ofl.global.error.CustomException;
 import com.ofl.global.error.ErrorCode;
 
@@ -25,16 +26,21 @@ public class GatheringServiceImpl implements GatheringService {
 
 	private final GatheringRepository gatheringRepository;
 	private final GatheringMapper gatheringMapper;
+	private final MemberRepository memberRepository;
 	
 	@Override
 	@Transactional
-	public Long createGathering(GatheringRequestDto dto, Member host) {
+	public Long createGathering(GatheringRequestDto dto, Long hostId) {
+		
+		Member persistentHost = memberRepository.findById(hostId)
+				.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+		
 		Gathering gathering = new Gathering(
 				dto.getTitle(),
 				dto.getDescription(),
 				dto.getStartsAt(),
 				dto.getMaxCapacity(),
-				host);
+				persistentHost);
 		return gatheringRepository.save(gathering).getId();
 	}
 

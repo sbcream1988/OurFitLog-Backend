@@ -22,4 +22,6 @@ public interface ChatMapper {
 	
 	List<ChatRoomResponseDto> toRoomDtoList(List<ChatRoom> chatRooms);
 	List<ChatMessageResponseDto> toMessageDtoList(List<ChatMessage> chatMessages);
+	
+
 }

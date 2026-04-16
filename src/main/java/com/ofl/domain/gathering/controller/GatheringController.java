@@ -30,7 +30,7 @@ public class GatheringController {
 	
 	@PostMapping
 	public ResponseEntity<ApiResponse<Long>> create(@RequestBody GatheringRequestDto dto, @AuthenticationPrincipal CustomUserDetails userDetails ){
-		Long gatheringId = gatheringService.createGathering(dto, userDetails.getMember());
+		Long gatheringId = gatheringService.createGathering(dto, userDetails.getId());
 		
 		return ResponseEntity.ok(ApiResponse.success(gatheringId));
 	}

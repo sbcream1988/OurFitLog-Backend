@@ -30,8 +30,6 @@ public class SecurityConfig {
 
     private final CorsConfigurationSource corsConfigurationSource;
 
-    private final MapController mapController;
-
 	private final OAuth2UserService<OAuth2UserRequest, OAuth2User> customOAuth2UserService;
 	private final OAuth2SuccessHandler oAuth2SuccessHandler;
 	private final JwtTokenProvider jwtTokenProvider;

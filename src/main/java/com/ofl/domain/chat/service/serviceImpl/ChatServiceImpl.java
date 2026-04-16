@@ -1,6 +1,7 @@
-package com.ofl.domain.chat.service.service;
+package com.ofl.domain.chat.service.serviceImpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -9,13 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ofl.domain.chat.dto.request.ChatMessageRequestDto;
 import com.ofl.domain.chat.dto.request.ChatRoomRequestDto;
 import com.ofl.domain.chat.dto.response.ChatMessageResponseDto;
+import com.ofl.domain.chat.dto.response.ChatRoomResponseDto;
 import com.ofl.domain.chat.entity.ChatMessage;
+import com.ofl.domain.chat.entity.ChatParticipation;
 import com.ofl.domain.chat.entity.ChatRoom;
 import com.ofl.domain.chat.entity.ChatType;
 import com.ofl.domain.chat.mapper.ChatMapper;
 import com.ofl.domain.chat.repository.ChatMessageRepository;
+import com.ofl.domain.chat.repository.ChatParticipationRepository;
 import com.ofl.domain.chat.repository.ChatRoomRepository;
-import com.ofl.domain.chat.service.serviceImpl.ChatService;
+import com.ofl.domain.chat.service.service.ChatService;
 import com.ofl.domain.member.entity.Member;
 import com.ofl.domain.member.repository.MemberRepository;
 import com.ofl.global.error.CustomException;
@@ -33,6 +37,7 @@ public class ChatServiceImpl implements ChatService{
 	private final MemberRepository memberRepository;
 	private final ChatMapper chatMapper;
 	private final SimpMessagingTemplate simpMessagingTemplate;
+	private final ChatParticipationRepository chatParticipationRepository;
 	
 	@Override
 	public Long createChatRoom(ChatRoomRequestDto dto) {
@@ -71,5 +76,70 @@ public class ChatServiceImpl implements ChatService{
 	public List<ChatMessageResponseDto> getChatHistory(Long roomId){
 		List<ChatMessage> messages = chatMessageRepository.findByChatRoomIdOrderByCreatedAtAsc(roomId);
 		return chatMapper.toMessageDtoList(messages);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<ChatRoomResponseDto> getChatRooms(String email){;
+		Member me = memberRepository.findByEmail(email)
+				.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+		
+		List<ChatRoom> rooms = chatParticipationRepository.findByMember(me).stream()
+				.map(participation -> participation.getChatRoom())
+				.toList();
+		
+		List<ChatRoomResponseDto> roomDtoList = chatMapper.toRoomDtoList(rooms);
+		
+		for(int i = 0; i <rooms.size(); i++ ) {
+			ChatRoom room = rooms.get(i);
+			ChatRoomResponseDto dto = roomDtoList.get(i);
+			
+			if(room.getType() == ChatType.ONETOONE) {
+				String partnerName = room.getName()
+						.replace(me.getNickname(), "")
+						.replace(",","")
+						.trim();
+				
+				dto.setName(partnerName);
+			}
+		}
+		
+		return roomDtoList;
+	}
+	
+	//개인
+	@Override
+	public Long createOneToOneChat(String myEmail, Long partnerId) {
+		Member me = memberRepository.findByEmail(myEmail)
+				.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+		
+		Member partner = memberRepository.findById(partnerId)
+				.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+		
+		Optional<ChatRoom> existingRoom = chatRoomRespository.findOneToOneRoom(me.getId(), partner.getId());
+		
+		if(existingRoom.isPresent()) {
+			return existingRoom.get().getId();
+		}
+		
+		ChatRoom room = ChatRoom.builder()
+				.name(me.getNickname() + ", " + partner.getNickname())
+				.type(ChatType.ONETOONE)
+				.build();
+		ChatRoom savedRoom = chatRoomRespository.save(room);
+		
+		ChatParticipation myParticipation = ChatParticipation.builder()
+				.chatRoom(savedRoom)
+				.member(me)
+				.build();
+		ChatParticipation partnerParticipation = ChatParticipation.builder()
+				.chatRoom(savedRoom)
+				.member(partner)
+				.build();
+		
+		chatParticipationRepository.save(myParticipation);
+		chatParticipationRepository.save(partnerParticipation);
+		
+		return savedRoom.getId();
 	}
 }
