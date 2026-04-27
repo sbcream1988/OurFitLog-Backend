@@ -14,6 +14,7 @@ import lombok.Setter;
 public class ChatMessageResponseDto {
 	private Long roomId;
 	private String senderNickname;
+	private String senderId;
 	private String message;
 	private String createdAt;
 }

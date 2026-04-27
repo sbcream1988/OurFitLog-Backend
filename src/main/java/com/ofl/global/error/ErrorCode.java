@@ -27,7 +27,7 @@ public enum ErrorCode {
 	GATHERING_NOT_FOUND(HttpStatus.NOT_FOUND, "GATHERING-002", "존재하지 않는 모임입니다"),
 	PARTICIPATION_NOT_FOUD(HttpStatus.NOT_FOUND, "PARTICIPATION-002", "존재하지 않는 참가정보입니다"),
 	CHATROOM_NOT_FOUND(HttpStatus.NOT_FOUND, "CHATROOM-001", "채팅방을 찾을 수 없습니다"),
-	
+	EXERCISE_NOT_FOUND(HttpStatus.NOT_FOUND, "EXERCISE-001", "운동기록을 찾을 수 없습니다"),
 	
 	ALREADY_PARTICIPATED(HttpStatus.CONFLICT,"PARTICIPATION-001", "이미 신청한 모임입니다"),
 	

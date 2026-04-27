@@ -15,6 +15,7 @@ import com.ofl.domain.post.entity.Post;
 public interface PostMapper {
 
 	@Mapping(source = "member.nickname", target = "nickname")
+	@Mapping(source = "member.id", target = "memberId")
 	PostResponseDto toDto(Post post);
 	
 	List<PostResponseDto> toDtoList(List<Post> posts);

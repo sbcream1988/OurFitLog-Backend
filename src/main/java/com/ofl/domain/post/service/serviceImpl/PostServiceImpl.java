@@ -2,10 +2,13 @@ package com.ofl.domain.post.service.serviceImpl;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ofl.domain.exercise.service.service.ExerciseService;
 import com.ofl.domain.image.entity.Image;
 import com.ofl.domain.image.service.service.ImageService;
 import com.ofl.domain.location.entity.Location;
@@ -33,6 +36,8 @@ public class PostServiceImpl implements PostService {
 	private final PostMapper postMapper;
 	private final LocationMapper locationMapper;
 	private final ImageService imageService;
+	private final ExerciseService exerciseService;
+
 	
 	@Override
 	@Transactional
@@ -61,6 +66,12 @@ public class PostServiceImpl implements PostService {
 				post.addImage(imageEntity);
 			}
 		}
+		
+		Post savedPost = postRepository.save(post);
+		
+		if(request.getExercises() != null && !request.getExercises().isEmpty()) {
+			exerciseService.createExercise(savedPost, request.getExercises());
+		}
 				
 		return postRepository.save(post).getId();
 	}
@@ -69,5 +80,21 @@ public class PostServiceImpl implements PostService {
 		List<Post> posts = postRepository.searchNearbyPosts(lat, lng, placeName);
 		
 		return postMapper.toDtoList(posts);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Page<PostResponseDto> getPosts(Pageable pageable){
+		Page<Post> posts = postRepository.findAll(pageable);
+		
+		return posts.map(post -> postMapper.toDto(post));
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public PostResponseDto getPost(Long id) {
+		Post post = postRepository.findById(id)
+				.orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
+		return postMapper.toDto(post);
 	}
 }

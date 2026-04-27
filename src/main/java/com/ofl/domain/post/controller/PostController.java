@@ -2,10 +2,13 @@ package com.ofl.domain.post.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,4 +43,17 @@ public class PostController {
 		List<PostResponseDto> response = postService.getFilteredPosts(lat, lng, placeName);
 		return ResponseEntity.ok(ApiResponse.success("게시글을 성공적으로 찾았습니다",response));
 	}
+	
+	@GetMapping
+	public ResponseEntity<ApiResponse<Page<PostResponseDto>>> getPosts(Pageable pageable){
+		Page<PostResponseDto> response = postService.getPosts(pageable);
+		return ResponseEntity.ok(ApiResponse.success("게시글을 성공적으로 찾았습니다", response));
+	}
+	
+	@GetMapping("{id}")
+	public ResponseEntity<ApiResponse<PostResponseDto>> getPost(@PathVariable("id") Long id){
+		PostResponseDto post = postService.getPost(id);
+		return ResponseEntity.ok(ApiResponse.success("게시글을 성공적으로 찾았습니다", post));
+	}
+	
 }

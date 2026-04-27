@@ -1,5 +1,8 @@
 package com.ofl.domain.post.dto.request;
 
+import java.util.List;
+
+import com.ofl.domain.exercise.dto.request.ExerciseRequestDto;
 import com.ofl.domain.location.dto.request.LocationRequestDto;
 
 import lombok.AllArgsConstructor;
@@ -20,4 +23,6 @@ public class PostCreateRequestDto {
 	private String content;
 	
 	private LocationRequestDto location;
+	
+	private List<ExerciseRequestDto> exercises;
 }

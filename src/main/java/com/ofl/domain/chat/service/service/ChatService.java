@@ -11,7 +11,7 @@ public interface ChatService {
 
 	Long createChatRoom(ChatRoomRequestDto dto);
 
-	void sendMessage(ChatMessageRequestDto dto);
+	void sendMessage(ChatMessageRequestDto dto, String email);
 
 	List<ChatMessageResponseDto> getChatHistory(Long roomId);
 

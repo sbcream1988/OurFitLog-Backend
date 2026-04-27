@@ -18,6 +18,7 @@ public interface ChatMapper {
 	
 	@Mapping(source = "sender.nickname", target = "senderNickname")
 	@Mapping(source = "chatRoom.id", target = "roomId")
+	@Mapping(source = "sender.id", target = "senderId")
 	ChatMessageResponseDto toMessageDto(ChatMessage chatMessage);
 	
 	List<ChatRoomResponseDto> toRoomDtoList(List<ChatRoom> chatRooms);

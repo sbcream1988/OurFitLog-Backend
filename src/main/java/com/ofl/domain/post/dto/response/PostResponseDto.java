@@ -21,6 +21,7 @@ public class PostResponseDto {
 	private String title; 
 	private String content; 
 	private String nickname;
+	private Long memberId;
 	private LocationResponseDto location;
 	private LocalDateTime createdAt;
 }

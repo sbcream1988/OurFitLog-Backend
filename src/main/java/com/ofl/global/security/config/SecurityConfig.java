@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,7 +17,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.ofl.domain.map.controller.MapController;
 import com.ofl.global.security.filter.JwtAuthenticationFilter;
 import com.ofl.global.security.handler.OAuth2SuccessHandler;
 import com.ofl.global.security.provider.JwtTokenProvider;
@@ -41,6 +41,8 @@ public class SecurityConfig {
 		.csrf(csrf -> csrf.disable())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(auth -> auth.requestMatchers("/", "/login/**", "/oauth2/**", "/api/map/**").permitAll()
+						.requestMatchers("/ws-stomp/**").permitAll()
+						.requestMatchers(HttpMethod.GET, "/api/post/**", "/api/posts/**").permitAll()
 						.anyRequest().authenticated())
 				.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
 				.oauth2Login(

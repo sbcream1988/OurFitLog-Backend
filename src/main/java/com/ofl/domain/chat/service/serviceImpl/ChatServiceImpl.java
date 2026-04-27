@@ -50,11 +50,11 @@ public class ChatServiceImpl implements ChatService{
 	}
 	
 	@Override
-	public void sendMessage(ChatMessageRequestDto dto) {
+	public void sendMessage(ChatMessageRequestDto dto, String email) {
 		ChatRoom room = chatRoomRespository.findById(dto.getRoomId())
 				.orElseThrow(() -> new CustomException(ErrorCode.CHATROOM_NOT_FOUND));
 		
-		Member sender = memberRepository.findByEmail(dto.getSender())
+		Member sender = memberRepository.findByEmail(email)
 				.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 		
 		ChatMessage chatMessage = ChatMessage.builder()
