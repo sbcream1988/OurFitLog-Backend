@@ -9,4 +9,6 @@ import com.ofl.domain.chat.entity.ChatMessage;
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long>{
 
 	List<ChatMessage> findByChatRoomIdOrderByCreatedAtAsc(Long roomId);
+
+	void deleteByChatRoomId(Long roomId);
 }

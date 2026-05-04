@@ -14,4 +14,5 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 			+ "JOIN chat_participation cp2 ON cr.id = cp2.chat_room_id " + "WHERE cr.type = 'ONETOONE' "
 			+ "AND cp1.member_id = :myId " + "AND cp2.member_id = :partnerId", nativeQuery = true)
 	Optional<ChatRoom> findOneToOneRoom(@Param("myId") Long myId, @Param("partnerId") Long partnerId);
+
 }

@@ -18,3 +18,4 @@ public class ChatMessageResponseDto {
 	private String message;
 	private String createdAt;
 }
+  

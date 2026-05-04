@@ -18,5 +18,7 @@ public interface ChatService {
 	Long createOneToOneChat(String myEmail, Long partnerId);
 
 	List<ChatRoomResponseDto> getChatRooms(String email);
+	
+	void leaveRoom(String email, Long roomId);
 
 }

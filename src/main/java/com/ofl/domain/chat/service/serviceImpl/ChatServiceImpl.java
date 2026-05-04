@@ -142,4 +142,25 @@ public class ChatServiceImpl implements ChatService{
 		
 		return savedRoom.getId();
 	}
+	
+	@Override
+	@Transactional
+	public void leaveRoom(String email, Long roomId) {
+		Member me = memberRepository.findByEmail(email)
+				.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+		
+//		ChatParticipation participation = chatParticipationRepository.findByMemberAndChatRoomId(me,roomId)
+//				.orElseThrow(() -> new CustomException(ErrorCode.PARTICIPATION_NOT_FOUD));
+//		
+//		chatParticipationRepository.delete(participation);
+		
+		chatParticipationRepository.deleteByMemberAndChatRoomId(me, roomId);
+		
+		if(chatParticipationRepository.countByChatRoomId(roomId) == 0 ) {
+			chatMessageRepository.deleteByChatRoomId(roomId);
+			chatRoomRespository.deleteById(roomId);
+		}
+		
+		
+	}
 }
