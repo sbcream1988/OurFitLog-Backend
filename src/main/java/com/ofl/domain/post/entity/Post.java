@@ -42,7 +42,7 @@ public class Post extends BaseTime {
 	private String content;
 	
 	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-	private List<Exercise> exercise;
+	private List<Exercise> exercises;
 
 	@OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
 	private List<Reply> reply;

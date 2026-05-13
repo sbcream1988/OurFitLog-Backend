@@ -1,10 +1,8 @@
 package com.ofl.domain.participation.service.service;
 
-import com.ofl.domain.member.entity.Member;
-
 public interface ParticipationService {
 
-	Long attend(Long gatheringId, Member member);
+	Long attend(Long gatheringId, Long memberId);
 
-	void cancel(Long gatheringId, Member member);
+	void cancel(Long gatheringId, Long memberId);
 }

@@ -6,12 +6,13 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import com.ofl.domain.exercise.mapper.ExerciseMapper;
 import com.ofl.domain.location.mapper.LocationMapper;
 import com.ofl.domain.post.dto.request.PostCreateRequestDto;
 import com.ofl.domain.post.dto.response.PostResponseDto;
 import com.ofl.domain.post.entity.Post;
 
-@Mapper(componentModel = "spring", uses = {LocationMapper.class})
+@Mapper(componentModel = "spring", uses = {LocationMapper.class,ExerciseMapper.class})
 public interface PostMapper {
 
 	@Mapping(source = "member.nickname", target = "nickname")
@@ -22,7 +23,7 @@ public interface PostMapper {
 	
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "member", ignore = true)
-	@Mapping(target = "exercise", ignore = true)
+	@Mapping(target = "exercises", ignore = true)
 	@Mapping(target = "reply", ignore = true)
 	@Mapping(target = "images", ignore = true)
 	Post toEntity(PostCreateRequestDto dto);

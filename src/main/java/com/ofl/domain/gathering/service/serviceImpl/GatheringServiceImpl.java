@@ -14,6 +14,7 @@ import com.ofl.domain.gathering.repository.GatheringRepository;
 import com.ofl.domain.gathering.service.service.GatheringService;
 import com.ofl.domain.member.entity.Member;
 import com.ofl.domain.member.repository.MemberRepository;
+import com.ofl.domain.participation.repository.ParticipationRepository;
 import com.ofl.global.error.CustomException;
 import com.ofl.global.error.ErrorCode;
 
@@ -27,6 +28,7 @@ public class GatheringServiceImpl implements GatheringService {
 	private final GatheringRepository gatheringRepository;
 	private final GatheringMapper gatheringMapper;
 	private final MemberRepository memberRepository;
+	private final ParticipationRepository participationRepository;
 	
 	@Override
 	@Transactional
@@ -47,7 +49,12 @@ public class GatheringServiceImpl implements GatheringService {
 	@Override
 	public List<GatheringResponseDto> getActiveGatherings() {
 		return gatheringRepository.findActiveGatherings().stream()
-				.map(gatheringMapper::toDto)
+				.map(gathering -> {
+					GatheringResponseDto dto = gatheringMapper.toDto(gathering);
+					long currentCount = participationRepository.countAcceptedParticipants(gathering.getId());
+					dto.setCurrentParticipationsCount(currentCount);
+					return dto;
+				})
 				.collect(Collectors.toList());
 	}
 
@@ -55,7 +62,13 @@ public class GatheringServiceImpl implements GatheringService {
 	public GatheringResponseDto getGatheringById(Long id) {
 		Gathering gathering = gatheringRepository.findById(id)
 					.orElseThrow(()-> new CustomException(ErrorCode.GATHERING_NOT_FOUND));
-		return gatheringMapper.toDto(gathering);
+		
+		long currentCount = participationRepository.countAcceptedParticipants(id);
+		
+		GatheringResponseDto dto = gatheringMapper.toDto(gathering);
+		dto.setCurrentParticipationsCount(currentCount);
+		
+		return dto;
 	}
 	
 	@Override

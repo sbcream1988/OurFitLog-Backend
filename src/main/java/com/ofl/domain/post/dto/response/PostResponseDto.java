@@ -1,7 +1,9 @@
 package com.ofl.domain.post.dto.response;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import com.ofl.domain.exercise.dto.response.ExerciseResponseDto;
 import com.ofl.domain.location.dto.response.LocationResponseDto;
 
 import lombok.AllArgsConstructor;
@@ -24,4 +26,5 @@ public class PostResponseDto {
 	private Long memberId;
 	private LocationResponseDto location;
 	private LocalDateTime createdAt;
+	private List<ExerciseResponseDto> exercises;
 }

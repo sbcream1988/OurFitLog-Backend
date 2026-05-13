@@ -66,13 +66,13 @@ public class ParticipationServiceTest {
 	            entityManager.createNativeQuery("SET FOREIGN_KEY_CHECKS = 1").executeUpdate();
 
 	            // 2. 데이터 저장
-	            Member host = memberRepository.save(new Member("host@test.com", "호스트", Role.USER, ProviderType.GOOGLE, "1234"));
+	            Member host = memberRepository.save(new Member("host@test.com", "1234", "호스트", Role.USER, ProviderType.GOOGLE, "1234"));
 	            Gathering gathering = new Gathering("테스트 모임", "설명", LocalDateTime.now().plusDays(1), 10, host);
 	            savedGatheringId = gatheringRepository.save(gathering).getId();
 
 	            memberIds.clear();
 	            for (int i = 0; i < 100; i++) {
-	                Member m = memberRepository.save(new Member("user" + i + "@test.com", "유저" + i, Role.USER, ProviderType.SYSTEM, "00" + i));
+	                Member m = memberRepository.save(new Member("user" + i + "@test.com", "test" + i,  "유저" + i, Role.USER, ProviderType.SYSTEM, "00" + i));
 	                memberIds.add(m.getId());
 	            }
 
@@ -121,7 +121,7 @@ public class ParticipationServiceTest {
 			Member participant = memberRepository.findById(memberId).orElseThrow();
 			executorService.execute(() -> {
 				try {
-					participationService.attend(savedGatheringId, participant);
+					participationService.attend(savedGatheringId, memberId);
 				} catch (Exception e) {
 					System.out.println("신청 실패 사유: " + e.getMessage());
 				} finally {

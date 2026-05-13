@@ -45,8 +45,9 @@ public class Member extends BaseTime {
 	private String providerId;
 	
 	@Builder
-	public Member(String email, String nickname, Role role, ProviderType provider, String providerId) {
+	public Member(String email, String password, String nickname, Role role, ProviderType provider, String providerId) {
 		this.email = email;
+		this.password = password;
 		this.nickname = nickname;
 		this.role = role;
 		this.provider = provider;

@@ -26,9 +26,13 @@ public class GatheringResponseDto {
 	
 	private String hostNickname;
 	
-	private int currentParticipationsCount;
+	private long currentParticipationsCount;
 	
 	private LocalDateTime createdAt;
+
+	public void setCurrentParticipationsCount(long currentCount) {
+		this.currentParticipationsCount = currentCount;
+	}
 	
 }
  

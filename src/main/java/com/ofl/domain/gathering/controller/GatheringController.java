@@ -35,7 +35,7 @@ public class GatheringController {
 		return ResponseEntity.ok(ApiResponse.success(gatheringId));
 	}
 
-	@GetMapping("{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<ApiResponse<GatheringResponseDto>> get(@PathVariable Long id){
 		GatheringResponseDto response = gatheringService.getGatheringById(id);
 		
@@ -49,8 +49,8 @@ public class GatheringController {
 		return ResponseEntity.ok(ApiResponse.success(activeList));
 	}
 	
-	@DeleteMapping("{id}")
-	public ResponseEntity<Void> delete(@PathVariable("id")Long id){
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deleteGathering(@PathVariable("id")Long id){
 		gatheringService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
